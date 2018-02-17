@@ -19,17 +19,7 @@ bool sortinrev(const pair<int,string> &a, const pair<int,string> &b){
 
 template <typename T>
 
-int get_file_size(string filename)
-{
-    FILE *p_file = NULL;
-    p_file = fopen(filename.c_str(),"rb");
-    fseek(p_file,0,SEEK_END);
-    int size = ftell(p_file);
-    fclose(p_file);
-    return size;
-}
-
-wstring s2ws(const string& str)
+wstring s2ws(const string& str)  //function to convert string to wstring
 {
     int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
     std::wstring wstrTo( size_needed, 0 );
@@ -37,7 +27,7 @@ wstring s2ws(const string& str)
     return wstrTo;
 }
 
-unsigned long long int GetFileSize(wstring const &path) {
+unsigned long long int GetFileSize(wstring const &path) {  //function to get file size
 
     WIN32_FIND_DATAW data;
     HANDLE h = FindFirstFileW(path.c_str(), &data);
@@ -48,7 +38,7 @@ unsigned long long int GetFileSize(wstring const &path) {
 
     return data.nFileSizeLow | (unsigned long long int)data.nFileSizeHigh << 32;
 }
-int getlargefiles (string dir)
+int getlargefiles (string dir)  //function to get 10 largest size files
 {
     DIR *dp;
     struct dirent *dirp;
@@ -78,7 +68,7 @@ int getlargefiles (string dir)
     closedir(dp);
     return 0;
 }
-int clean(string dir, string newdir){
+int clean(string dir, string newdir){  //function to clean the desktop
     DIR *dp;
     struct dirent *dirp;
     if((dp  = opendir(dir.c_str())) == NULL) {
