@@ -1,3 +1,4 @@
+//Anjaney Sharma
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -6,24 +7,19 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include <bits/stdc++.h>
 #include <windows.h>
+#include <Lmcons.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-/*function... might want it in some class?*/
-vector< pair<int, string> > v;
-bool sortinrev(const pair<int,string> &a, const pair<int,string> &b)
-{
+vector< pair<unsigned long long int, string> > v;
+bool sortinrev(const pair<int,string> &a, const pair<int,string> &b){
        return (a.first > b.first);
 }
+
 template <typename T>
-  string NumberToString ( T Number )
-  {
-     ostringstream ss;
-     ss << Number;
-     return ss.str();
-  }
-int get_file_size(string filename) // path to file
+
+int get_file_size(string filename)
 {
     FILE *p_file = NULL;
     p_file = fopen(filename.c_str(),"rb");
@@ -32,6 +28,7 @@ int get_file_size(string filename) // path to file
     fclose(p_file);
     return size;
 }
+
 wstring s2ws(const string& str)
 {
     int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
@@ -39,7 +36,8 @@ wstring s2ws(const string& str)
     MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
     return wstrTo;
 }
-int GetFileSize(wstring const &path) {
+
+unsigned long long int GetFileSize(wstring const &path) {
 
     WIN32_FIND_DATAW data;
     HANDLE h = FindFirstFileW(path.c_str(), &data);
@@ -48,35 +46,30 @@ int GetFileSize(wstring const &path) {
 
     FindClose(h);
 
-    return data.nFileSizeLow | (int)data.nFileSizeHigh << 32;
+    return data.nFileSizeLow | (unsigned long long int)data.nFileSizeHigh << 32;
 }
-int getdir (string dir)
+int getlargefiles (string dir)
 {
     DIR *dp;
     struct dirent *dirp;
     if((dp  = opendir(dir.c_str())) == NULL) {
-        //cout << "Error(" << errno << ") opening " << dir << endl;
         return errno;
     }
 
     string s1;
-    //int count=0;
     while ((dirp = readdir(dp)) != NULL){
         if(dirp->d_name[0] != '.'){
             s1 = dir + "\\" + dirp->d_name;
-            //cout << s1 << endl;
-            int si = GetFileSize(s2ws(s1));
-            int fi = (si/1000000);
-            string s2 = NumberToString(si);
-            //cout << v.size() << " ";
+            unsigned long long int si = GetFileSize(s2ws(s1));
+            unsigned long long int fi = (si/1000000);
 
             if(si==0){
-                getdir(s1);
+                getlargefiles(s1);
             }
             else {
-                if(v.size() < 12) v.push_back(make_pair(fi, s1));
+                if(v.size() <= 10) v.push_back(make_pair(fi, s1));
                 else{
-                        v[11] = (make_pair(fi, s1));
+                        v[10] = (make_pair(fi, s1));
                         sort(v.begin(), v.end(), sortinrev);
                 }
             }
@@ -97,13 +90,12 @@ int clean(string dir, string newdir){
     string name;
     string s1;
     while ((dirp = readdir(dp)) != NULL){
-            s1 = dir + "\\" + dirp->d_name;
+        s1 = dir + "\\" + dirp->d_name;
         if(dirp->d_name[0] != '.'){
-                name = string(dirp->d_name);
-                int f;
-                for(f=name.size()-1; f>=0; f--) if(dirp->d_name[f] == '.') break;
-                if(f!= -1 && GetFileSize(s2ws(s1)))
-                    //cout << name.substr(f+1) << "  " << name << endl;
+            name = string(dirp->d_name);
+            int f;
+            for(f=name.size()-1; f>=0; f--) if(dirp->d_name[f] == '.') break;
+            if(f!= -1 && GetFileSize(s2ws(s1)))
                 files[name.substr(f+1)].push_back(name);
         }
     }
@@ -114,10 +106,8 @@ int clean(string dir, string newdir){
         mkdir((newdir + "\\" + itr->first).c_str());
         for(vector<string> :: iterator it = (itr->second).begin(); it != (itr->second).end(); it++){
                 result = rename((dir + "\\" + *it).c_str(), (newdir + "\\" + itr->first + "\\" + *it).c_str());
-                if ( result == 0 )
-                    cout << ( "File successfully renamed \n" );
-                else
-                    cout << ( "Error in transferring file \n" );
+                if (result)
+                    cout << ( "Error in transferring file " + *it);
             }
         }
     }
@@ -127,24 +117,44 @@ int clean(string dir, string newdir){
 
 int main()
 {
-
+    //1st part of problem.
     string drv = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for(int d=0; d<26; d++){
       string Letter(1,drv[d]);
     string s = Letter + ":";
-    //cout << s << " ";
     string dir = string(s);
     vector<string> files = vector<string>();
-    getdir(dir);
+    getlargefiles(dir);
     }
-    if(v.size() && v.size() < 10)
+    if(v.size() && v.size() < 10){
+            sort(v.begin(), v.end(), sortinrev);
         for(int j=0; j<v.size(); j++) cout << v[j].first << " " << v[j].second << endl;
-    else if(v.size >= 10)
+    }
+    else if(v.size() >= 10)
         for(int j=0; j<10; j++) cout << v[j].first << " " << v[j].second << endl;
     else cout << "Wrong Path" << endl;
 
-    string s2 = "C:\\Users\\Anjaney Sharma\\Desktop\\code\\first\\innovaccer\\abcd";
-    string s3 = "C:\\Users\\Anjaney Sharma\\Desktop\\code\\first\\innovaccer\\efgh";
-    clean(s2, s3);
+//    2nd part of problem
+      TCHAR name [ UNLEN + 1 ];
+      DWORD size = UNLEN + 1;
+      string user;
+      if (GetUserName( (TCHAR*)name, &size )){
+        user = string(name);
+      }
+      else{
+        cout << "Please enter the user name.\n";
+        cin >> user;
+      }
+      string desktop_path = "C:\\Users\\" + user + "\\Desktop";
+        string documents_path = "C:\\Users\\" + user + "\\Documents";
+        int err = clean(desktop_path, documents_path);
+        if(err){
+            cout << "Please enter the folder path where Desktop and Documents folders are located.\n";
+            char s2[100];
+            cin.getline(s2, sizeof(s2));
+            string desk = string(s2) + "\\Desktop";
+            string docu = string(s2) + "\\Documents";
+            clean(desk, docu);
+        }
     return 0;
 }
