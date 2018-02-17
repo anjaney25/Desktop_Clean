@@ -1,4 +1,3 @@
-Anjaney Sharma,
 I have written C++ script which can work in windows and perform the tasks given in assignment.
 
 HOW TO USE:
