@@ -17,8 +17,6 @@ bool sortinrev(const pair<int,string> &a, const pair<int,string> &b){
        return (a.first > b.first);
 }
 
-template <typename T>
-
 wstring s2ws(const string& str)  //function to convert string to wstring
 {
     int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
