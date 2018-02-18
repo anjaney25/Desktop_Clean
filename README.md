@@ -12,7 +12,7 @@ The program has two parts:
 	Assumption made is that the all drive letters are between A-Z.
 	Algo - For every alphabet I checked if it is valid drive letter, if it is then getLargeFiles() is called.
 		   I made a global vector of size 11 storing the file size and file's full path.
-		   For each entry after 10, vector is sorted thus maintaining top 10 large files and the new file is pushed in vector[11] position each time. Vector size is always <= 11 thus not much space is used and time taken is also less since one file entry is traversed once.
+		   For each entry after 10, vector is sorted thus maintaining top 10 large files and the new file is pushed in vector[11] position each time. Vector size is always <= 11 thus not much space is used and time taken is also less since one file entry is traversed once and files sizes are calculated without opening files.
 
 2. Cleaning Desktop.
 	Assumption made is that there is no file of size 0 bytes.
