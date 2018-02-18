@@ -36,7 +36,7 @@ unsigned long long int GetFileSize(wstring const &path) {  //function to get fil
 
     return data.nFileSizeLow | (unsigned long long int)data.nFileSizeHigh << 32;
 }
-int getlargefiles (string dir)  //function to get 10 largest size files
+int getLargeFiles (string dir)  //function to get 10 largest size files
 {
     DIR *dp;
     struct dirent *dirp;
@@ -52,7 +52,7 @@ int getlargefiles (string dir)  //function to get 10 largest size files
             unsigned long long int fi = (si/1000000);
 
             if(si==0){
-                getlargefiles(s1);
+                getLargeFiles(s1);
             }
             else {
                 if(v.size() <= 10) v.push_back(make_pair(fi, s1));
@@ -112,7 +112,7 @@ int main()
     string s = Letter + ":";
     string dir = string(s);
     vector<string> files = vector<string>();
-    getlargefiles(dir);
+    getLargeFiles(dir);
     }
     if(v.size() && v.size() < 10){
             sort(v.begin(), v.end(), sortinrev);
