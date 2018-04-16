@@ -1,4 +1,4 @@
-I have written C++ script which can work in windows and perform the tasks given in assignment.
+What final.exe will do.
 
 HOW TO USE:
 1) No user input is required for a typical run.
