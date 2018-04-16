@@ -17,8 +17,11 @@ bool sortinrev(const pair<int,string> &a, const pair<int,string> &b){
        return (a.first > b.first);
 }
 
+<<<<<<< HEAD
 template <typename T>
 
+=======
+>>>>>>> 60648cdb9e0896a07e6a6c7f8caee812433f4c5b
 wstring s2ws(const string& str)  //function to convert string to wstring
 {
     int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
@@ -27,7 +30,11 @@ wstring s2ws(const string& str)  //function to convert string to wstring
     return wstrTo;
 }
 
+<<<<<<< HEAD
 unsigned long long int GetFileSize(wstring const &path) {  // function to get file size
+=======
+unsigned long long int GetFileSize(wstring const &path) {  //function to get file size
+>>>>>>> 60648cdb9e0896a07e6a6c7f8caee812433f4c5b
 
     WIN32_FIND_DATAW data;
     HANDLE h = FindFirstFileW(path.c_str(), &data);
@@ -38,7 +45,11 @@ unsigned long long int GetFileSize(wstring const &path) {  // function to get fi
 
     return data.nFileSizeLow | (unsigned long long int)data.nFileSizeHigh << 32;
 }
+<<<<<<< HEAD
 int getlargefiles (string dir)  // function to get 10 files of largest sizes.
+=======
+int getLargeFiles (string dir)  //function to get 10 largest size files
+>>>>>>> 60648cdb9e0896a07e6a6c7f8caee812433f4c5b
 {
     DIR *dp;
     struct dirent *dirp;
@@ -54,7 +65,7 @@ int getlargefiles (string dir)  // function to get 10 files of largest sizes.
             unsigned long long int fi = (si/1000000);
 
             if(si==0){
-                getlargefiles(s1);
+                getLargeFiles(s1);
             }
             else {
                 if(v.size() <= 10) v.push_back(make_pair(fi, s1));
@@ -68,7 +79,11 @@ int getlargefiles (string dir)  // function to get 10 files of largest sizes.
     closedir(dp);
     return 0;
 }
+<<<<<<< HEAD
 int clean(string dir, string newdir){  // function to clean desktop
+=======
+int clean(string dir, string newdir){  //function to clean the desktop
+>>>>>>> 60648cdb9e0896a07e6a6c7f8caee812433f4c5b
     DIR *dp;
     struct dirent *dirp;
     if((dp  = opendir(dir.c_str())) == NULL) {
@@ -114,7 +129,7 @@ int main()
     string s = Letter + ":";
     string dir = string(s);
     vector<string> files = vector<string>();
-    getlargefiles(dir);
+    getLargeFiles(dir);
     }
     if(v.size() && v.size() < 10){
             sort(v.begin(), v.end(), sortinrev);
